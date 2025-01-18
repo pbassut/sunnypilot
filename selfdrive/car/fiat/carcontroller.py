@@ -45,13 +45,12 @@ class CarController(CarControllerBase):
     # steering
     # steer torque
     apply_steer = 0
-    above_steer_speed = CS.out.vEgo > self.CP.minSteerSpeed
-    if CC.latActive and above_steer_speed:
+    if CC.latActive:
       new_steer = int(round(actuators.steer * self.params.STEER_MAX))
       apply_steer = apply_meas_steer_torque_limits(new_steer, self.apply_steer_last, CS.out.steeringTorqueEps, self.params) * 0.98
 
     self.apply_steer_last = apply_steer
-    can_sends.append(fiatcan.create_lkas_command(self.packer, self.frame, apply_steer, above_steer_speed))
+    can_sends.append(fiatcan.create_lkas_command(self.packer, self.frame, apply_steer, CS.out.vEgo > self.CP.minSteerSpeed))
 
     # if CS.high_beam and not CS.prev_high_beam:
     #   self.test_counter += 1
