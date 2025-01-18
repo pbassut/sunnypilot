@@ -52,7 +52,7 @@ class CarController(CarControllerBase):
     self.apply_steer_last = apply_steer
     can_sends.append(fiatcan.create_lkas_command(self.packer, self.frame, apply_steer, CC.latActive))
 
-    if CS.genericToggle and not CS.prev_high_beam:
+    if CS.out.genericToggle and not CS.prev_high_beam:
       self.test_counter += 1
 
     if self.frame % 25 == 0:
