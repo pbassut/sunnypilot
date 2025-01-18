@@ -2,6 +2,7 @@
 from cereal import car
 from openpilot.selfdrive.car.interfaces import CarInterfaceBase
 from openpilot.selfdrive.car import create_button_events, get_safety_config
+from openpilot.common.conversions import Conversions as CV
 
 ButtonType = car.CarState.ButtonEvent.Type
 
@@ -35,6 +36,8 @@ class CarInterface(CarInterfaceBase):
     ret.experimentalLongitudinalAvailable = True
     ret.pcmCruise = not experimental_long
     ret.openpilotLongitudinalControl = experimental_long
+
+    ret.minSteerSpeed = 10 * CV.KPH_TO_MS
 
     # Tuning for experimental long
     ret.longitudinalTuning.kiV = [2.0, 1.5]
