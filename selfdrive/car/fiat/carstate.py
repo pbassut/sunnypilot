@@ -104,6 +104,7 @@ class CarState(CarStateBase):
     messages = [
       # sig_address, frequency
       ("BCM_1", 1),
+      ("BCM_2", 4),
       ("STEERING", 100),
       ("ABS_1", 100),
       ("ABS_2", 100),
