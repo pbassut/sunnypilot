@@ -12,9 +12,9 @@ def create_lkas_command(packer, frame, apply_steer, enabled):
 def create_lkas_hud_command(packer, lat_active, eps_faulted, test=None):
   values = {
     "SOMETHING_HANDS_ON_WHEEL_2": 0,
-    "BEEP": 3 if eps_faulted else 0,
+    "BEEP": 0,
     "LKAS_LED_STATUS": 1 if eps_faulted else 0,
-    "HUD_WARNING_TYPE": 7 if eps_faulted else 0,
+    "HUD_WARNING_TYPE": 15 if eps_faulted else 0,
     "UNKNOWN": 0,
     "LANE_HUD_INDICATOR": 6 if lat_active else 1,
   }
