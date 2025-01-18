@@ -15,6 +15,7 @@ class CarController(CarControllerBase):
 
     self.hud_count = 0
     self.last_lkas_falling_edge = 0
+    self.test_counter = 0
 
     self.packer = CANPacker(dbc_name)
     self.params = CarControllerParams(CP)
@@ -51,9 +52,12 @@ class CarController(CarControllerBase):
     self.apply_steer_last = apply_steer
     can_sends.append(fiatcan.create_lkas_command(self.packer, self.frame, apply_steer, CC.latActive))
 
+    if CS.genericToggle and not CS.prev_high_beam:
+      self.test_counter += 1
+
     if self.frame % 25 == 0:
       eps_faulted = CS.out.steerFaultPermanent or CS.out.steerFaultTemporary
-      can_sends.append(fiatcan.create_lkas_hud_command(self.packer, CC.latActive, eps_faulted))
+      can_sends.append(fiatcan.create_lkas_hud_command(self.packer, CC.latActive, eps_faulted, self.test_counter))
 
     self.frame += 1
 
