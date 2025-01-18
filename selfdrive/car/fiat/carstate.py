@@ -73,7 +73,8 @@ class CarState(CarStateBase):
     )
 
     self.prev_high_beam = self.high_beam
-    ret.genericToggle = self.high_beam = cp.vl["BCM_2"]["HIGH_BEAM"] == 1
+    self.high_beam = cp_adas.vl["BCM_2"]["HIGH_BEAM"] == 1
+    ret.genericToggle = cp_adas.vl["BCM_2"]["HIGH_BEAM"] == 1
 
     # steering wheel
     ret.steeringAngleDeg = cp.vl["STEERING"]["STEERING_ANGLE"]
@@ -103,7 +104,6 @@ class CarState(CarStateBase):
     messages = [
       # sig_address, frequency
       ("BCM_1", 1),
-      ("BCM_2", 4),
       ("STEERING", 100),
       ("ABS_1", 100),
       ("ABS_2", 100),
@@ -120,6 +120,7 @@ class CarState(CarStateBase):
   @staticmethod
   def get_adas_can_parser(CP):
     messages = [
+      ("BCM_2", 4),
       ("GEAR", 1),
       ("ENGINE_2", 99),
       ("ABS_6", 100),
