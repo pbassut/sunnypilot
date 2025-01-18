@@ -76,8 +76,8 @@ class CarState(CarStateBase):
     ret.steeringTorque = cp.vl["EPS_2"]["DRIVER_TORQUE"]
     ret.steeringTorqueEps = cp.vl["EPS_2"]["EPS_TORQUE"]
     ret.steeringPressed = abs(ret.steeringTorque) > STEER_THRESHOLD
-    # ret.steerFaultTemporary = cp_cam.vl["LKA_HUD_2"]["LKAS_HUD_STATE"] == 7
-    ret.steerFaultPermanent = cp_cam.vl["LKA_HUD_2"]["LKAS_HUD_STATE"] == 7
+    # ret.steerFaultTemporary = cp_cam.vl["LKAS_COMMAND"]["EPS_FAULT"] == 7 # need to find this
+    ret.steerFaultPermanent = cp_cam.vl["LKAS_COMMAND"]["EPS_FAULT"] == 1
     ret.yawRate = cp.vl["ABS_2"]["YAW_RATE"]
 
     # cruise state
@@ -128,7 +128,7 @@ class CarState(CarStateBase):
   @staticmethod
   def get_cam_can_parser(CP):
     messages = [
-      ("LKA_HUD_2", 4),
+      ("LKAS_COMMAND", 100),
     ]
     return CANParser(DBC[CP.carFingerprint]["pt"], messages, 2)
 
