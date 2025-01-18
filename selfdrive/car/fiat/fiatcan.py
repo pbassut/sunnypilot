@@ -18,7 +18,7 @@ def create_lkas_hud_command(packer, lat_active, eps_faulted, test):
     "LKAS_FAULTED_2": not lat_active,
     "HANDS_ON_WHEEL_WARNING": 1,
     # "LANE_HUD_INDICATOR": 0 if lat_active else 1,
-    "LANE_HUD_INDICATOR": test,
+    "LANE_HUD_INDICATOR": test % 16,
   }
   return packer.make_can_msg("LKA_HUD_2", PT_BUS, values)
 
