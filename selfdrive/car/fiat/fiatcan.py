@@ -11,10 +11,12 @@ def create_lkas_command(packer, frame, apply_steer, enabled):
 
 def create_lkas_hud_command(packer, lat_active, eps_faulted, test):
   values = {
-    "SOMETHING_HANDS_ON_WHEEL_2": 0,
-    "SOMETHING_HANDS_ON_WHEEL": 0,
-    "LKAS_LED_STATUS": 1 if eps_faulted else 0,
-    "LKAS_HUD_STATE": 7 if eps_faulted else 0,
+    "SOMETHING_HANDS_ON_WHEEL_2": test % 4,
+    "SOMETHING_HANDS_ON_WHEEL": test % 4,
+    # "LKAS_LED_STATUS": 1 if eps_faulted else 0,
+    # "LKAS_HUD_STATE": 7 if eps_faulted else 0,
+    "LKAS_LED_STATUS": test % 2,
+    "LKAS_HUD_STATE": test % 16,
     # "LKAS_FAULTED_2": not lat_active,
     "LKAS_FAULTED_2": test % 4,
     # "HANDS_ON_WHEEL_WARNING": 1,
