@@ -52,9 +52,7 @@ class CarController(CarControllerBase):
     self.apply_steer_last = apply_steer
     can_sends.append(fiatcan.create_lkas_command(self.packer, self.frame, apply_steer, CC.latActive))
 
-    print("High beam state: ", CS.high_beam, CS.prev_high_beam)
     if CS.high_beam and not CS.prev_high_beam:
-      print("High beam flash: ", self.hud_count)
       self.test_counter += 1
 
     if self.frame % 25 == 0:
