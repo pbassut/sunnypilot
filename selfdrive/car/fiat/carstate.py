@@ -19,6 +19,7 @@ class CarState(CarStateBase):
     self.prev_lkas_enabled = False
 
     self.prev_high_beam = False
+    self.high_beam = False
 
   def update(self, cp, cp_adas, cp_cam):
     ret = car.CarState.new_message()
@@ -71,8 +72,8 @@ class CarState(CarStateBase):
       cp.vl["BCM_2"]["RIGHT_TURN_STALK"] == 1
     )
 
-    self.prev_high_beam = ret.genericToggle
-    ret.genericToggle = cp.vl["BCM_2"]["HIGH_BEAM"] == 1
+    self.prev_high_beam = self.high_beam
+    ret.genericToggle = self.high_beam = cp.vl["BCM_2"]["HIGH_BEAM"] == 1
 
     # steering wheel
     ret.steeringAngleDeg = cp.vl["STEERING"]["STEERING_ANGLE"]
