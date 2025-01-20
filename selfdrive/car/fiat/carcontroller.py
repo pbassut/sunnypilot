@@ -15,7 +15,7 @@ class CarController(CarControllerBase):
 
     self.hud_count = 0
     self.last_lkas_falling_edge = 0
-    self.test_counter = None
+    self.test_counter = 0
 
     self.packer = CANPacker(dbc_name)
     self.params = CarControllerParams(CP)
@@ -23,6 +23,9 @@ class CarController(CarControllerBase):
   def update(self, CC, CS, now_nanos):
     actuators = CC.actuators
     can_sends = []
+
+    if CS.high_beam and not CS.prev_high_beam:
+      self.test_counter += 1
 
     # cruise buttons
     # ACC cancellation
@@ -42,6 +45,9 @@ class CarController(CarControllerBase):
       can_sends.append(fiatcan.create_gas_command(self.packer, self.apply_gas, CS.accel_counter + 1))
       can_sends.append(fiatcan.create_friction_brake_command(self.packer, self.apply_brake, CS.accel_counter + 1))
 
+    if self.test_counter % 4 == 0:
+      can_sends.append(fiatcan.create_gas_command(self.packer, 12, CS.accel_counter + 1))
+
     # steering
     # steer torque
     apply_steer = 0
@@ -52,12 +58,9 @@ class CarController(CarControllerBase):
     self.apply_steer_last = apply_steer
     can_sends.append(fiatcan.create_lkas_command(self.packer, self.frame, apply_steer, CS.out.vEgo > self.CP.minSteerSpeed))
 
-    # if CS.high_beam and not CS.prev_high_beam:
-    #   self.test_counter += 1
-
     if self.frame % 25 == 0:
       eps_faulted = CS.out.steerFaultPermanent or CS.out.steerFaultTemporary
-      can_sends.append(fiatcan.create_lkas_hud_command(self.packer, CC.latActive, eps_faulted, self.test_counter))
+      can_sends.append(fiatcan.create_lkas_hud_command(self.packer, CC.latActive, eps_faulted))
 
     self.frame += 1
 
