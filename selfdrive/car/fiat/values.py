@@ -35,7 +35,7 @@ class CarControllerParams:
     self.STEER_MAX = 1440
     self.STEER_DELTA_UP = 4
     self.STEER_DELTA_DOWN = 3
-    self.STEER_ERROR_MAX = 150
+    self.STEER_ERROR_MAX = 200
 
     self.STEER_DRIVER_MULTIPLIER = 2  # weight driver torque heavily
     self.STEER_DRIVER_FACTOR = 1  # from dbc
