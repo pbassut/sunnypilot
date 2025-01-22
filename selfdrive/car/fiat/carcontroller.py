@@ -1,5 +1,5 @@
 from opendbc.can.packer import CANPacker
-from openpilot.selfdrive.car import apply_meas_steer_torque_limits
+from openpilot.selfdrive.car import apply_driver_steer_torque_limits
 from openpilot.selfdrive.car.fiat import fiatcan
 from openpilot.selfdrive.car.fiat.values import CarControllerParams
 from openpilot.selfdrive.car.interfaces import CarControllerBase
@@ -53,7 +53,7 @@ class CarController(CarControllerBase):
     apply_steer = 0
     if CC.latActive:
       new_steer = int(round(actuators.steer * self.params.STEER_MAX))
-      apply_steer = apply_meas_steer_torque_limits(new_steer, self.apply_steer_last, CS.out.steeringTorqueEps, self.params) * 0.98
+      apply_steer = apply_driver_steer_torque_limits(new_steer, self.apply_steer_last, CS.out.steeringTorque, self.params) * 0.98
 
     self.apply_steer_last = apply_steer
     can_sends.append(fiatcan.create_lkas_command(self.packer, self.frame, apply_steer, CS.out.vEgo > self.CP.minSteerSpeed))
