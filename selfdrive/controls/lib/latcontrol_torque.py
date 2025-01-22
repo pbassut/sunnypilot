@@ -25,7 +25,7 @@ from openpilot.selfdrive.modeld.constants import ModelConstants
 # move it at all, this is compensated for too.
 
 LOW_SPEED_X = [0, 10, 20, 30]
-LOW_SPEED_Y = [0.10, 0.05, 0.03, 0.01]
+LOW_SPEED_Y = [10, 8, 5, 2]
 LOW_SPEED_Y_NN = [7, 2, 1, 0]
 
 LAT_PLAN_MIN_IDX = 5
